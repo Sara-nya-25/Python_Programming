@@ -1,4 +1,9 @@
-# Ask user to input 2 numbers and add them and print the value
+"""
+Get 2 numbers from user
+calculate sum of 2 integers
+print the values
+"""
+
 value_1 = input('Enter a number: ')
 value_2 = input('Enter a number: ')
 number_1 = int(value_1)
