@@ -4,7 +4,7 @@ Ask option from user to convert Celsius to Fahrenheit or Fahrenheit to celsius
 Check if temperature below 10 Or above 20 and provide clothing suggestions
 """
 print("\n************* TEMPERATURE CONVERSION *************")
-print("\nDo you want to enter temperature in Celcius or Fahrenheit?")
+print("\nDo you want to convert from Celsius to Fahrenheit / Fahrenheit to Celsius?")
 option_temperature = input(" Enter ( C or F): ")
 
 if option_temperature == "C" or option_temperature == "c":
@@ -25,6 +25,8 @@ elif option_temperature == "F" or option_temperature == "f":
         print("\n Temperature is above 20 °C. Enjoy Sunny day!! Pack your swim wear.")
 else:
     print("\nInvalid input. Please enter a valid input.")
+
+
 """
 Tesr Input  Expected Output
 ° Celsius   ° Fahrenheit

@@ -3,7 +3,7 @@ Temperature conversion
 Ask option from user to convert Celsius to Fahrenheit or Fahrenheit to celsius
 """
 print("\n************* TEMPERATURE CONVERSION *************")
-print("\nDo you want to enter temperature in Celcius or Fahrenheit?")
+print("\nDo you want to convert from Celsius to Fahrenheit / Fahrenheit to Celsius? ")
 option_temperature = input(" Enter ( °C or °F): ")
 
 if option_temperature == "C" or option_temperature == "c":

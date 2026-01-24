@@ -33,11 +33,11 @@ if price >= level2: # First we need to check discount is more than or equal to 3
     discount = discount + 25
 elif price >= level1: # If = not there then discount will not be applied if a person shops for 100
     print("\nCongratulations! You got 10% discount....")
-    print(f"\nShop some more for {level2- price} kr to get 25% discount.")
+    print(f"\nSuggestion: Shop some more for {level2- price} kr to get 25% discount.")
     discount = discount + 10
 else:
     print("\nNo discounts applied. Shop for minimum 100 Kr to get 10% discount.")
-    print(f"\nShop some more for {level1- price} kr to get 10% discount or {level2- price} kr to get 25% discount.")
+    print(f"\nSuggestion: Shop some more for {level1- price} kr to get 10% discount or {level2- price} kr to get 25% discount.")
 
 # in previous logic 100-discount is logic fail, it will reverse the 10 % discount to 90%
 final_price = price * (100-discount)/100
