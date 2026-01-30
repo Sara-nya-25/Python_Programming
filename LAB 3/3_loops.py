@@ -9,19 +9,24 @@ Tip! To solve the problem you need: several variables, input, while loop.
 """
 number_list = []
 input_var = ''
-print("Welcome to Receipt Buddy! Exit by typing: quit")
-while input_var != 'quit':
-    input_var = input("\nEnter an amount: ")
-    if input_var.lower() == 'quit':
-        break
-    else:
-        number_list.append(int(input_var))
+print("Welcome to Receipt Buddy! Exit by typing:'q' quit")
+try:
+    while input_var != 'q':
 
-if len(number_list) > 0:
-    print("Numbers Entered are: ", number_list)
-    print("Sum of the numbers entered", sum(number_list))
-else:
-    print("No numbers entered")
+        input_var = input("\nEnter an amount or 'q' to quit: ")
+        if input_var.lower() == 'q':
+            break
+        else:
+            number_list.append(int(input_var))
+
+
+    if len(number_list) > 0:
+        print("Numbers Entered are: ", number_list)
+        print(" Total amount: ", sum(number_list),'kr')
+    else:
+        print("No numbers entered")
+except ValueError:
+    print("Invalid input")
 
 """
 Version 1:

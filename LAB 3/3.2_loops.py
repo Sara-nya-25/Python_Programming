@@ -5,12 +5,12 @@ That will be 75 SEK in total, or 25.0 SEK per person. Welcome back!
 """
 number_list = []
 input_var = ''
-print("***** Welcome to Receipt Buddy! Exit by typing: quit********")
+total_amt = 0
+print("***** Welcome to Receipt Buddy! Exit by typing: 'q' quit ********")
 try:
-    while input_var != 'quit':
-
-        input_var = input("\nEnter an amount or 'quit' to stop: ")
-        if input_var.lower() == 'quit':
+    while input_var != 'q':
+        input_var = input("\nEnter an amount or 'q' to quit: ")
+        if input_var.lower() == 'q':
             break
         else:
             number_list.append(int(input_var))
@@ -28,6 +28,7 @@ try:
     print(f"The share is {total_amt / num_of_person:.2f} kr. Welcome back!")
 except ValueError:
     print("Invalid input")
+
 """
 Version 2:
 100, 1 person

@@ -18,13 +18,19 @@ number = random.randint(1, 100)
 print(" I'm thinking of a number between 1 and 100. Can you guess what it is? ")
 guess = 0
 counter = 0
-while guess != number:
-    guess = int(input("\nGuess: "))
-    if guess == number:
-        print(f"Congratulations! You guessed the number in {counter} guesses! ")
-        break
-    elif guess > number:
-        print("No, it's high!")
-    elif guess < number:
-        print("No, it's low!")
-    counter += 1
+try:
+    while guess != number:
+        guess = int(input("\nGuess(1 -100): "))
+        if 0 < guess <= 100:
+            if guess == number:
+                print(f"Congratulations! You guessed the number in {counter} guesses! ")
+                break
+            elif guess > number:
+                print("No, it's high!")
+            elif guess < number:
+                print("No, it's low!")
+            counter += 1
+        else:
+            print("Enter a valid number!")
+except ValueError:
+    print(f"Invalid input!!!")
