@@ -1,3 +1,18 @@
+"""
+Build the first version of poker_hand(cards).Continue adding more checks to the function.
+Tip! You can make a function that prints the card value more nicely:
+pretty_print_card(["hearts", 5]) → "hearts five"
+List of poker hands.
+One pair (two cards of the same value)
+Two pair
+Three of a kind (three of a kind)
+Straight (5 cards in a row, e.g. 7-8-9-10-11)
+Flush / color (all cards have the same color)
+House (pairs and threes of different values)
+Four of a kind
+Straight flush (5 cards in a row, of the same color)
+Five of a kind
+"""
 from collections import Counter
 import random
 def get_hand_stats(hand):

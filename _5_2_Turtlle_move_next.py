@@ -1,3 +1,11 @@
+"""
+Write a function that moves the pen a suitable distance to the right, without drawing.
+The idea is that you should be able to combine it with the square function, to draw multiple squares.
+Example:
+for x in range(5):
+t.square()
+t.move_next()
+"""
 import turtle
 
 t = turtle.Turtle()

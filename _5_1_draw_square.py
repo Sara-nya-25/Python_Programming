@@ -1,3 +1,4 @@
+#Write a function that draws a square. The length of the side should be a parameter to the function.
 import turtle
 
 t = turtle.Turtle()

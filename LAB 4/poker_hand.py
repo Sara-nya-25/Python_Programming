@@ -1,3 +1,4 @@
+# Simulating Poker hand as a game with 2 players
 import random
 from collections import Counter
 
