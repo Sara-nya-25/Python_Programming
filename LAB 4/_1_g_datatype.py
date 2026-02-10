@@ -19,6 +19,7 @@ def is_number_v1(x):
 print("call is_number_v1(52.5),is_number_v1(48)")
 print(is_number_v1(52.5))
 print(is_number_v1(48))
+print(is_number_v1('sdsd'))
 
 import numbers
 print("writing a function using numbers module")
@@ -27,3 +28,4 @@ def is_number_v2(x):
 print("call is_number(5.5),is_number(42))")
 print(is_number_v2(5))
 print(is_number_v2(42))
+print(is_number_v2('A'))

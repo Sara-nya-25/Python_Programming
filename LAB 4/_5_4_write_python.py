@@ -16,10 +16,10 @@ def move_gap():
 
 def draw_P():
     t.left(90)
-    t.forward(100)  # Stem
+    t.forward(178)  # Stem
     t.right(90)
     for _ in range(18): # Curve
-        t.forward(5)
+        t.forward(6.5)
         t.right(10)
     t.penup()
     t.goto(t.xcor() + 60, t.ycor() - 100) # Reset to bottom-right
@@ -70,7 +70,7 @@ def draw_H():
 
 def draw_O():
     t.penup()
-    t.forward(30)
+    t.forward(60)
     t.pendown()
     # Draw a circle with a radius of 50
     t.circle(50)
@@ -90,7 +90,7 @@ def draw_N():
 # --- EXECUTION ---
 # Start position
 t.penup()
-t.goto(-250, 0)
+t.goto(-350, 0)
 t.pendown()
 
 # Drawing the word
