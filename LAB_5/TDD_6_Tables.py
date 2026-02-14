@@ -30,3 +30,11 @@ def test_multiplication_zero_limit():
 def test_multiplication_floats():
     # 0.5 * 1, 0.5 * 2
     assert multiplication_table(0.5, 2) == [0.5, 1.0]
+
+"""
+Test results
+PASSED LAB_5/TDD_6_Tables.py::test_multiplication_basic
+PASSED LAB_5/TDD_6_Tables.py::test_multiplication_zero_limit
+PASSED LAB_5/TDD_6_Tables.py::test_multiplication_floats
+============================================================
+"""

@@ -19,3 +19,5 @@ def test_autocomplete_fuzzy_match():
     # Our previous code would return [] because neither starts with "berry"
     assert "Blueberry" in autocomplete_list("berry", master_list)
     assert "Strawberry" in autocomplete_list("berry", master_list)
+
+#PASSED LAB_5/TDD_5_search_user_v3.py::test_autocomplete_fuzzy_match

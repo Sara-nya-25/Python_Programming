@@ -13,3 +13,5 @@ def test_autocomplete_case_insensitivity():
     # Testing that 'ap' finds 'Apple' and 'Apricot' regardless of casing
     assert autocomplete_list("ap", master) == ["Apple", "Apricot"]
     assert autocomplete_list("", master) == []
+
+# Test results: PASSED LAB_5/TDD_5_search_user_v2.py::test_autocomplete_case_insensitivity
