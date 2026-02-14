@@ -24,12 +24,12 @@ def test_count_words(sentence, expected):
 """
 Test results:
                                                                                                        [100%]
-LAB_5/TDD_2_Count_words.py::test_count_words[hello world-2] PASSED                                                                                                           [ 16%]
-LAB_5/TDD_2_Count_words.py::test_count_words[-0] PASSED                                                                                                                      [ 33%]
-LAB_5/TDD_2_Count_words.py::test_count_words[   -0] PASSED                                                                                                                   [ 50%]
-LAB_5/TDD_2_Count_words.py::test_count_words[hello    world-2] PASSED                                                                                                        [ 66%]
-LAB_5/TDD_2_Count_words.py::test_count_words[  hello world  -2] PASSED                                                                                                       [ 83%]
-LAB_5/TDD_2_Count_words.py::test_count_words[Python is fun!-3] PASSED
-LAB_5/TDD_2_Count_words.py::test_count_words[P-1] PASSED                                                                                                                     [100%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[hello world-2] PASSED                                                                                                           [ 16%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[-0] PASSED                                                                                                                      [ 33%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[   -0] PASSED                                                                                                                   [ 50%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[hello    world-2] PASSED                                                                                                        [ 66%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[  hello world  -2] PASSED                                                                                                       [ 83%]
+LAB_5/TDD_2_Count_words_test.py::test_count_words[Python is fun!-3] PASSED
+LAB_5/TDD_2_Count_words_test.py::test_count_words[P-1] PASSED                                                                                                                     [100%]
  
 """
