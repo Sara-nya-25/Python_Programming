@@ -6,7 +6,7 @@
 2c Implement the function, so that all test cases turn green.
 """
 import pytest
-from TDD_count_words import count_words
+from .TDD_count_words import count_words
 
 @pytest.mark.parametrize("sentence, expected", [
     ("hello world", 2),          # Normal sentence

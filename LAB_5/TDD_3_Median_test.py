@@ -4,7 +4,7 @@
 3c Implement the function so that all test cases are green.
 """
 import pytest
-from TDD_3_Median_num import find_median
+from .TDD_3_Median_num import find_median
 
 @pytest.mark.parametrize("input_list, expected", [
     ([], None),                   # Empty list
