@@ -1,0 +1,22 @@
+product_id,product_name,price,quantity
+MIL001,Milk 3%,26.9,500
+MIL002,Milk Eko,28.9,300
+MIL003,Milk 1.5% ,21.9,200
+EGG001,Egg,48.99,300
+HCHK88,Full Chicken,89.99,75
+BRCHK99,Chicken Breast,119.9,45
+FRORG01,Orange,35.9,80
+FRPIN01,Pineapple,35,150
+FRBANA1,Banana Eko,28.9,110
+FRAPP02,Apple Royal Gala,32.9,200
+FRGRAP1,Grapes,80,300
+VEGTOM12,Tomato,52.9,125
+VEGCAR14,Carrot,20,300
+VEGCUCU8,Cucucmber,15,400
+VEGONI21,Onion,16.9,500
+VEGGIN3,Ginger,69.9,85
+VEGGARL9,Garlic,149.9,100
+COCOMB11,Marabou Milk chocolate,38.9,550
+COCOFAZ1,Fazer Coco Nut,50.9,400
+COCOMR3,Marabou Hazelnut,45.9,350
+COCOMR4,Marabou White Cranberry,52.9,250
