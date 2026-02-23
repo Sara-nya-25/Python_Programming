@@ -33,7 +33,6 @@ class ShoppingCart():
     def get_items(self):
         return self.items
 
-
 class Order:
     def __init__(self, cart):
         self.order_id = f"ORD-{datetime.datetime.now().strftime('%Y%m%d%H%M%S')}"
