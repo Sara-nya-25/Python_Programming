@@ -59,4 +59,4 @@ if __name__ == "__main__":
     shopping_simulation(inventory)
 
     # 3. Final Step: Save the updated stock back to CSV
-    # (Optional: You can write a function to save the inventory list back to CSV)
+    # (Optional:write a function to save the inventory list back to CSV)
