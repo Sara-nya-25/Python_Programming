@@ -8,12 +8,14 @@ class TestBankAccount(unittest.TestCase):
         self.acc = BankAccount(acc_holder='Sara',initial_balance=1000, interest_rate=0.01)
 
     def test_deposit(self):
-        self.acc.deposit(500)
-        self.assertEqual(self.acc.get_balance(), 1500)
+        self.assertEqual(self.acc.deposit(500), 1500)
 
     def test_withdraw(self):
         self.acc.withdraw(300)
         self.assertEqual(self.acc.get_balance(), 700)
+
+    def test_get_balance(self):
+        self.assertEqual(self.acc.get_balance(), 1000)
 
     def test_apply_interest(self):
         # 5% of 100 is 5. Total should be 105.
