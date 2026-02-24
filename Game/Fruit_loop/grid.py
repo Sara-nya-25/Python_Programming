@@ -4,7 +4,7 @@ class Grid:
     width = 36
     height = 12
     empty = "."
-    wall = "🟩"
+    wall = "■"
     #symbols = ["🟩","■","■"]
 
     def __init__(self):
