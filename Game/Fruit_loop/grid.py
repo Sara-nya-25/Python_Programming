@@ -45,3 +45,12 @@ class Grid:
             self.set(j, 0, self.wall)
             self.set(j, self.height - 1, self.wall)
 
+    def get_random_x(self):
+        return random.randint(0, self.width-1)
+
+    def get_random_y(self):
+        return random.randint(0, self.height-1)
+
+    def is_empty(self, x, y):
+        return self.get(x,y) == self.empty
+
