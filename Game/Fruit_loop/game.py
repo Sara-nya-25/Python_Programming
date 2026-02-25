@@ -2,11 +2,13 @@ from grid import Grid
 from player import Player
 import pickups
 
-player = Player(2,1)
+
 score = 0
 inventory = []
 
 g = Grid()
+start_x, start_y = g.get_center()
+player = Player(start_x, start_y)
 g.set_player(player)
 g.make_walls()
 pickups.randomize(g)
