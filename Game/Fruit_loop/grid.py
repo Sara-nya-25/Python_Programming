@@ -20,7 +20,13 @@ class Grid:
     def set_player(self, player):
         self.player = player
 
-    def clear(selfself, x,y):
+    def get_center(self):
+        """Returns the (x, y) coordinates for the center of the grid."""
+        center_x = self.width // 2
+        center_y = self.height // 2
+        return center_x, center_y
+
+    def clear(self, x,y):
         self.set(x, y, self.empty)
 
     def __str__(self):
