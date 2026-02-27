@@ -33,6 +33,7 @@ while command not in ["q", "x"]:
 
     command = input("Use WASD to move, Q/X to quit. ")
     command = command.casefold()[:1]
+    dx, dy = 0, 0
 
     if command in moves:
         dx, dy = moves[command]
@@ -53,5 +54,5 @@ while command not in ["q", "x"]:
             #g.clear(player.pos_x, player.pos_y)
 
             g.clear(new_x, new_y)
-    player.move(dx, dy)
+    player.move(dx, dy, g)
 print("Thank you for playing!")

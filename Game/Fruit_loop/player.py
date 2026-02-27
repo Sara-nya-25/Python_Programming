@@ -1,5 +1,5 @@
 from grid import Grid
-
+from pickups import Item
 class Player:
     marker = "@"
 
@@ -14,16 +14,17 @@ class Player:
             self.pos_x += dx
             self.pos_y += dy
 
-        current_tile = grid.get(self.pos_x, self.pos_y)
-        if current_tile == "S":  # Fruit Salad
-            self.score += 20
-            grid.clear(self.pos_x, self.pos_y)
-        elif current_tile == "o":  # Standard Fruit
-            self.score += 10
-            grid.clear(self.pos_x, self.pos_y)
+            current_tile = grid.get(self.pos_x, self.pos_y)
+            # Check if the tile contains an Item object
+
+            if isinstance(current_tile, Item):
+                # If Fruit,u pickup item worth 20 points
+                self.score += current_tile.value
+                grid.clear(self.pos_x, self.pos_y)
+
         else:
-            # Optional: feedback for hitting a wall
-            pass
+            # Feedback for hitting a wall
+            print("BONK! That's a wall.")
 
 
     def can_move(self, dx, dy, grid):
