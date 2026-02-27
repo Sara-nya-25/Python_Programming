@@ -1,3 +1,4 @@
+import random
 class Item:
     def __init__(self, name, value=20, symbol="?"):
         self.name = name

@@ -3,7 +3,7 @@ from player import Player
 import pickups
 
 
-score = 0
+score = 100
 inventory = []
 
 g = Grid()
@@ -50,8 +50,19 @@ while command not in ["q", "x"]:
         dx, dy = moves[command]
 
     if player.can_move(dx, dy, g):
+        # Before moving, turn the current floor tile into lava
+        g.set(player.pos_x, player.pos_y, "~")
+        # The floor is lava! Subtract 1 point for the attempt to move
+
         new_x = player.pos_x + dx
         new_y = player.pos_y + dy
+        # CHECK: Is the place you are going ALREADY lava?
+        if g.get(new_x, new_y) == "~":
+            print("Ouch! This floor is already melted! -5 points")
+            score -= 5
+        else:
+            score -= 1  # Regular lava cost
+
         maybe_item = g.get(new_x, new_y)
 
     #if command == "d" and player.can_move(1,0, g):
@@ -63,7 +74,13 @@ while command not in ["q", "x"]:
             inventory.append(maybe_item.name)
             print(f"You found a {maybe_item.name}, +{maybe_item.value} points. ")
             #g.clear(player.pos_x, player.pos_y)
-
             g.clear(new_x, new_y)
-    player.move(dx, dy, g)
+
+            # Update position
+        player.pos_x = new_x
+        player.pos_y = new_y
+    if score < 0:
+        print("\nGAME OVER: You stayed in the lava too long!")
+        break
+    #player.move(dx, dy, g)
 print("Thank you for playing!")
