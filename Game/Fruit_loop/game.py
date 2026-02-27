@@ -33,8 +33,19 @@ while command not in ["q", "x"]:
 
     command = input("Use WASD to move, Q/X to quit. ")
     command = command.casefold()[:1]
-    dx, dy = 0, 0
 
+    # Handle the new Inventory command
+    if command == "i":
+        if not inventory:
+            print("\nYour inventory is empty.")
+        else:
+            print("\n--- Inventory ---")
+            for item in inventory:
+                print(f"- {item}")
+        input("\nPress Enter to continue...")
+        continue  # Skip the movement logic for this turn
+
+    dx, dy = 0, 0
     if command in moves:
         dx, dy = moves[command]
 
