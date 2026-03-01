@@ -103,4 +103,13 @@ while command not in ["q", "x"]:
         print("\nGAME OVER: You stayed in the lava too long!")
         break
     #player.move(dx, dy, g)
+if score > 80:
+    print("\nBrilliant! You are a Star Player ⭐⭐⭐!" )
+    print("You Won a Gold Trophy 🏆")
+elif 50 < score < 80:
+    print("\nExcellent! You are Amazing!")
+    print("You Won a Silver 🥈")
+elif 30 < score < 50:
+    print("Good Playing!")
+    print("You won a Bronze medal 🥉")
 print("Thank you for playing!")
