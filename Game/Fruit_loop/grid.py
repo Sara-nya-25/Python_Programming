@@ -65,8 +65,8 @@ class Grid:
 
         # Room 1: Top Left Room (approx 5x5)
         # We define the boundaries
-        top, bottom = 2, 6
-        left, right = 3, 8
+        top, bottom = 2, 5
+        left, right = 4, 9
         gap_y = 4  # The 'door' will be on the right wall at this Y coordinate
 
         for y in range(top, bottom + 1):
@@ -79,8 +79,8 @@ class Grid:
 
         # Room 2: Bottom Right Room
         # Using a single loop approach for horizontal and vertical lines
-        r2_top, r2_bottom = self.height - 7, self.height - 3
-        r2_left, r2_right = self.width - 10, self.width - 4
+        r2_top, r2_bottom = self.height - 7, self.height - 4
+        r2_left, r2_right = self.width - 10, self.width - 5
         gap_x = r2_left + 2  # The 'door' will be on the top wall at this X coordinate
 
         for x in range(r2_left, r2_right + 1):
