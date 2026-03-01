@@ -91,3 +91,21 @@ class Grid:
         for y in range(r2_top, r2_bottom + 1):
             self.set(r2_left, y, self.wall)  # Left wall
             self.set(r2_right, y, self.wall)  # Right wall
+
+    def place_exit(self):
+        """Places 'E' in a random available corner of the grid."""
+        # Define the 4 corners: (0,0), (max_x, 0), (0, max_y), (max_x, max_y)
+        # We use +1 or -1 to stay inside the boundary walls if necessary
+        corners = [
+            (1, 1),  # Top-Left
+            (self.width - 2, 1),  # Top-Right
+            (1, self.height - 2),  # Bottom-Left
+            (self.width - 2, self.height - 2)  # Bottom-Right
+        ]
+
+        random.shuffle(corners)  # Mix them up
+
+        for x, y in corners:
+            if self.is_empty(x, y):
+                self.set(x, y, "E")
+                return  # Exit found a home, stop looking
