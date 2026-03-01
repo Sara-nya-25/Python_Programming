@@ -23,11 +23,12 @@ moves = {
 }
 print("--------FRUIT LOOPS GAME START---------")
 print("********** Instructions **********")
-print("@- player \n?- Fruits you pickup")
+print("'@' - player \n'?' - Fruits you pickup\n'~' - lava trail")
 print(f"You are given {score} points initially.")
-print("For every move -1 point, '~' indicates lava ")
+print("For every move -1 point, you leave one '~' lava trail ")
 print("For every Step into lava '~' -5 points")
 print("Press 'p' to see your pickups")
+print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
 
 
 def print_status(game_grid):
