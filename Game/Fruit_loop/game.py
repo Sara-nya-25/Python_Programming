@@ -34,7 +34,9 @@ while command not in ["q", "x"]:
 
     command = input("Use WASD to move, Q/X to quit. ")
     command = command.casefold()[:1]
-
+    # Handle Quit
+    if command in ["q", "x"]:
+        break  # Exit the loop right away without running movement code
     # Handle the new Inventory command
     if command == "i":
         if not inventory:
