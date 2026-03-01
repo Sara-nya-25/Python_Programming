@@ -71,9 +71,18 @@ while command not in ["q", "x"]:
 
         new_x = player.pos_x + dx
         new_y = player.pos_y + dy
+        tile_content = g.get(new_x, new_y)
 
+        if tile_content == "E":
+            if len(inventory) == 7:
+                print("\nVICTORY! You reached the exit with all fruits!")
+                break
+            else:
+                print(f"\nThe exit is locked! Collect all {total_fruits} fruits first.")
+                # Don't move onto the exit tile if it's locked to avoid overwriting it with lava
+                continue
         # CHECK: Is the place you are going ALREADY lava?
-        if g.get(new_x, new_y) == "~":
+        if tile_content == "~":
             print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
             score -= 5
         else:
