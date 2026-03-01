@@ -22,14 +22,16 @@ moves = {
     "d": (1, 0)   # Right
 }
 print("--------FRUIT LOOPS GAME START---------")
-print("********** Instructions **********")
-print("'@' - player \n'?' - Fruits you pickup\n'~' - lava trail")
-print(f"You are given {score} points initially.")
-print("For every move -1 point, you leave one '~' lava trail ")
-print("For every Step into lava '~' -5 points")
-print("Press 'p' to see your pickups")
-print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
+def print_instructions():
+    print("********** Instructions **********")
+    print("'@' - player \n'?' - Fruits you pickup\n'~' - lava trail")
+    print(f"You are given {score} points initially.")
+    print("For every move -1 point, you leave one '~' lava trail ")
+    print("For every Step into lava '~' -5 points")
+    print("Press 'p' to see your pickups")
+    print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
 
+print_instructions()
 
 def print_status(game_grid):
     print("--------FRUIT LOOPS GAME---------")
@@ -46,7 +48,11 @@ while command not in ["q", "x"]:
     # Handle Quit
     if command in ["q", "x"]:
         break  # Exit the loop right away without running movement code
-    # Handle the new Inventory command
+    # Display Instructions 'i'
+    if command == 'i':
+        print_instructions()
+        continue
+    # Handle the pickup list
     if command == "p":
         if not inventory:
             print("\nYour inventory is empty.")
