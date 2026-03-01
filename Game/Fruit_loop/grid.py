@@ -61,24 +61,33 @@ class Grid:
         return self.get(x,y) == self.empty
 
     def make_internal_walls(self):
-        """Creates contiguous segments of walls using for-loops."""
-        # 1. Create a vertical divider with a gap in the middle
-        # This uses a for loop to create a contiguous line
-        mid_x = self.width // 4
-        for y in range(2, self.height - 2):
-            if y != self.height // 2:  # Leave a gap so it's not a dead end
-                self.set(mid_x, y, self.wall)
+        """Creates square rooms with doorways using for-loops."""
 
-        # 2. Create a horizontal shelf
-        # This uses a for loop to create a contiguous horizontal line
-        shelf_y = 3
-        for x in range(self.width // 2, self.width - 5):
-            # Only set if it's currently empty to avoid blocking the outer border
-            if self.is_empty(x, shelf_y):
-                self.set(x, shelf_y, self.wall)
+        # Room 1: Top Left Room (approx 5x5)
+        # We define the boundaries
+        top, bottom = 2, 7
+        left, right = 3, 8
+        gap_y = 4  # The 'door' will be on the right wall at this Y coordinate
 
-        # 3. Create a 'L' shape wall in the bottom right
-        for y in range(self.height - 5, self.height - 2):
-            self.set(self.width - 8, y, self.wall)
-        for x in range(self.width - 8, self.width - 2):
-            self.set(x, self.height - 5, self.wall)
+        for y in range(top, bottom + 1):
+            for x in range(left, right + 1):
+                # Only place a wall if it's on the edge of our square
+                if x == left or x == right or y == top or y == bottom:
+                    # Create a doorway on the right wall
+                    if not (x == right and y == gap_y):
+                        self.set(x, y, self.wall)
+
+        # Room 2: Bottom Right Room
+        # Using a single loop approach for horizontal and vertical lines
+        r2_top, r2_bottom = self.height - 7, self.height - 3
+        r2_left, r2_right = self.width - 10, self.width - 4
+        gap_x = r2_left + 2  # The 'door' will be on the top wall at this X coordinate
+
+        for x in range(r2_left, r2_right + 1):
+            if x != gap_x:
+                self.set(x, r2_top, self.wall)  # Top wall
+            self.set(x, r2_bottom, self.wall)  # Bottom wall
+
+        for y in range(r2_top, r2_bottom + 1):
+            self.set(r2_left, y, self.wall)  # Left wall
+            self.set(r2_right, y, self.wall)  # Right wall
