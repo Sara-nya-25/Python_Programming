@@ -65,7 +65,7 @@ class Grid:
 
         # Room 1: Top Left Room (approx 5x5)
         # We define the boundaries
-        top, bottom = 2, 7
+        top, bottom = 2, 6
         left, right = 3, 8
         gap_y = 4  # The 'door' will be on the right wall at this Y coordinate
 
