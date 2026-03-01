@@ -3,7 +3,7 @@ from player import Player
 import pickups
 
 
-score = 100
+score = 30
 inventory = []
 
 g = Grid()
@@ -23,8 +23,11 @@ moves = {
 }
 
 def print_status(game_grid):
-    print("----------------------------------")
-    print(f"You have {score} points.")
+    print("--------FRUIT LOOPS GAME START---------")
+    print("@- player \n?- Fruits you pickup")
+    print(f"You are given {score} points initially.")
+    print("For every move -1 point, '~' indicates lava ")
+    print("For every Step into lava '~' -5 points")
     print(game_grid)
 
 command = "a"
