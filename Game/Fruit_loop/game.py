@@ -53,25 +53,22 @@ while command not in ["q", "x"]:
         dx, dy = moves[command]
 
     if player.can_move(dx, dy, g):
-        # Before moving, turn the current floor tile into lava
-        g.set(player.pos_x, player.pos_y, "~")
-        # The floor is lava! Subtract 1 point for the attempt to move
 
         new_x = player.pos_x + dx
         new_y = player.pos_y + dy
+
         # CHECK: Is the place you are going ALREADY lava?
         if g.get(new_x, new_y) == "~":
-            print("Ouch! This floor is already melted! -5 points")
+            print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
             score -= 5
         else:
-            score -= 1  # Regular lava cost
+            score -= 1  # Regular movement costs -1
 
+        # Before moving, turn the current floor tile into lava
+        g.set(player.pos_x, player.pos_y, "~")
+
+        # Handle items at the new location
         maybe_item = g.get(new_x, new_y)
-
-    #if command == "d" and player.can_move(1,0, g):
-     #   maybe_item = g.get(player.pos_x +1, player.pos_y)
-      #  player.move(1,0)
-
         if isinstance(maybe_item, pickups.Item):
             score += maybe_item.value
             inventory.append(maybe_item.name)
