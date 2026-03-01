@@ -60,3 +60,25 @@ class Grid:
     def is_empty(self, x, y):
         return self.get(x,y) == self.empty
 
+    def make_internal_walls(self):
+        """Creates contiguous segments of walls using for-loops."""
+        # 1. Create a vertical divider with a gap in the middle
+        # This uses a for loop to create a contiguous line
+        mid_x = self.width // 4
+        for y in range(2, self.height - 2):
+            if y != self.height // 2:  # Leave a gap so it's not a dead end
+                self.set(mid_x, y, self.wall)
+
+        # 2. Create a horizontal shelf
+        # This uses a for loop to create a contiguous horizontal line
+        shelf_y = 3
+        for x in range(self.width // 2, self.width - 5):
+            # Only set if it's currently empty to avoid blocking the outer border
+            if self.is_empty(x, shelf_y):
+                self.set(x, shelf_y, self.wall)
+
+        # 3. Create a 'L' shape wall in the bottom right
+        for y in range(self.height - 5, self.height - 2):
+            self.set(self.width - 8, y, self.wall)
+        for x in range(self.width - 8, self.width - 2):
+            self.set(x, self.height - 5, self.wall)

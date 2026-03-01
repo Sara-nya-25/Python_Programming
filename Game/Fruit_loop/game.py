@@ -11,6 +11,7 @@ start_x, start_y = g.get_center()
 player = Player(start_x, start_y)
 g.set_player(player)
 g.make_walls()
+g.make_internal_walls() # Creates the new contiguous internal walls
 pickups.randomize(g)
 
 # A dictionary to map keys to (dx, dy) movements
@@ -79,6 +80,11 @@ while command not in ["q", "x"]:
             # Update position
         player.pos_x = new_x
         player.pos_y = new_y
+    elif command in moves:
+        # This triggers only if the command was a move but can_move returned False
+        print("\nOOPS! You bumped into a wall!")
+        score -= 2  # Optional: penalty for bumping into walls
+
     if score < 0:
         print("\nGAME OVER: You stayed in the lava too long!")
         break
