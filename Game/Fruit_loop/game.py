@@ -5,7 +5,8 @@ import pickups
 
 score = 30
 inventory = []
-move_count = 0
+move_count = 0  # check for moves, after 25 moves new fruit is placed
+grace_steps = 0 # after u pickup a fruit, move 5 steps without reducing score
 g = Grid()
 start_x, start_y = g.get_center()
 player = Player(start_x, start_y)
@@ -37,7 +38,10 @@ print_instructions()
 def print_status(game_grid):
     print("--------FRUIT LOOPS GAME---------")
     print(f"Your Score {score} points.")
+    if grace_steps > 0:
+        print(f"🛡️ GRACE PERIOD: {grace_steps} steps of protection left!")
     print(game_grid)
+
 
 command = "a"
 
@@ -73,6 +77,7 @@ while command not in ["q", "x"]:
         new_x = player.pos_x + dx
         new_y = player.pos_y + dy
         tile_content = g.get(new_x, new_y)
+        item_found = False
 
         if tile_content == "E":
             if len(inventory) == 7:
@@ -82,24 +87,38 @@ while command not in ["q", "x"]:
                 print(f"\nThe exit is locked! Collect all fruits first.")
                 # Don't move onto the exit tile if it's locked to avoid overwriting it with lava
                 continue
+
+        if isinstance(tile_content, pickups.Item):
+            score += tile_content.value
+            inventory.append(tile_content.name)
+            grace_steps = 5  # <--- NEW: Grant 5 protected steps
+            item_found = True
+            print(f"You found a {tile_content.name}, +{tile_content.value} points. ")
+            print(f"🛡️ GRACE PERIOD: You get {grace_steps} steps of protection!")
+            # g.clear(player.pos_x, player.pos_y)
+            g.clear(new_x, new_y)
+
         # CHECK: Is the place you are going ALREADY lava?
         if tile_content == "~":
-            print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
-            score -= 5
+            if grace_steps > 0:
+                print(f"🛡️ Grace Period blocked the lava damage!")
+            else:
+                print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
+                score -= 5
         else:
-            score -= 1  # Regular movement costs -1
-
+            if grace_steps > 0:
+                # No points deducted for regular movement during grace period
+                print("🛡️ Grace Period: Free move!")
+            else:
+                score -= 1  # Regular movement cost
+                # 3. Decrease Grace Period after movement
+        if grace_steps > 0 and not item_found:
+           grace_steps -= 1
         # Before moving, turn the current floor tile into lava
         g.set(player.pos_x, player.pos_y, "~")
 
         # Handle items at the new location
-        maybe_item = g.get(new_x, new_y)
-        if isinstance(maybe_item, pickups.Item):
-            score += maybe_item.value
-            inventory.append(maybe_item.name)
-            print(f"You found a {maybe_item.name}, +{maybe_item.value} points. ")
-            #g.clear(player.pos_x, player.pos_y)
-            g.clear(new_x, new_y)
+        #maybe_item = g.get(new_x, new_y)
 
         # Update position
         player.pos_x = new_x
