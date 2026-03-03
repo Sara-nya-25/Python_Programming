@@ -59,3 +59,17 @@ def randomize(grid):
             if grid.is_empty(x, y) and not in_room1 and not in_room2:
                 grid.set(x, y, item)
                 break
+
+
+def spawn_single_fruit(grid):
+    fruit_names = ["Pear", "Strawberry", "Cherry", "Watermelon", "Banana", "Apple", "Orange"]
+    new_fruit = Item(random.choice(fruit_names))
+
+    # Try to find a random empty spot
+    for _ in range(100):  # Limit attempts to prevent infinite loops if grid is full
+        x = grid.get_random_x()
+        y = grid.get_random_y()
+        if grid.is_empty(x, y):
+            grid.set(x, y, new_fruit)
+            return True
+    return False

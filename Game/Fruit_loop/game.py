@@ -5,13 +5,14 @@ import pickups
 
 score = 30
 inventory = []
-
+move_count = 0
 g = Grid()
 start_x, start_y = g.get_center()
 player = Player(start_x, start_y)
 g.set_player(player)
 g.make_walls()
 g.make_internal_walls() # Creates the new contiguous internal walls
+g.place_exit()
 pickups.randomize(g)
 
 # A dictionary to map keys to (dx, dy) movements
@@ -78,7 +79,7 @@ while command not in ["q", "x"]:
                 print("\nVICTORY! You reached the exit with all fruits!")
                 break
             else:
-                print(f"\nThe exit is locked! Collect all {total_fruits} fruits first.")
+                print(f"\nThe exit is locked! Collect all fruits first.")
                 # Don't move onto the exit tile if it's locked to avoid overwriting it with lava
                 continue
         # CHECK: Is the place you are going ALREADY lava?
@@ -100,9 +101,15 @@ while command not in ["q", "x"]:
             #g.clear(player.pos_x, player.pos_y)
             g.clear(new_x, new_y)
 
-            # Update position
+        # Update position
         player.pos_x = new_x
         player.pos_y = new_y
+
+        move_count += 1
+        if move_count % 25 == 0:
+            if pickups.spawn_single_fruit(g):
+                print("\n✨ The soil is fertile! A new fruit has sprouted somewhere! ✨")
+
     elif command in moves:
         # This triggers only if the command was a move but can_move returned False
         print("\nOOPS! You bumped into a wall!")
@@ -121,4 +128,5 @@ elif 50 < score < 80:
 elif 30 < score < 50:
     print("Good Playing!")
     print("You won a Bronze medal 🥉")
-print("Thank you for playing!")
+
+print("Thank you! Play Again!")
