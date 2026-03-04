@@ -125,7 +125,8 @@ while command not in ["q", "x"]:
         if grace_steps > 0 and not item_found:
            grace_steps -= 1
         # Before moving, turn the current floor tile into lava
-        if tile_content != "X":
+        old_tile = g.get(player.pos_x, player.pos_y)
+        if old_tile != "X":
             g.set(player.pos_x, player.pos_y, "~")
 
         # Handle items at the new location
