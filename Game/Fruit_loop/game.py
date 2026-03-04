@@ -27,12 +27,14 @@ moves = {
 print("--------FRUIT LOOPS GAME START---------")
 def print_instructions():
     print("********** Instructions **********")
-    print("'@' - player \n'?' - Fruits you pickup\n'~' - lava trail")
-    print(f"You are given {score} points initially.")
-    print("For every move -1 point, you leave one '~' lava trail ")
-    print("For every Step into lava '~' -5 points")
+    print("'@' - Player \n'?' - Fruits you pickup\n'~' - Lava trail\n'X' - Trap")
+    print("For every step on TRAP 'X' -10 points")
+    print("For every MOVE -1 point and you leave ONE '~' lava trail ")
+    print("For every Step into LAVA '~' -5 points")
     print("Press 'p' to see your pickups")
     print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
+    print("Press 'q' or 'x' to quit.")
+    print(f"You are given {score} points initially.")
 
 print_instructions()
 
