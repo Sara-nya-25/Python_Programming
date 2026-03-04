@@ -110,3 +110,19 @@ class Grid:
             if self.is_empty(x, y):
                 self.set(x, y, "E")
                 return  # Exit found a home, stop looking
+
+    def place_traps(self, count=5):
+        """Places traps 'X' only on empty floor tiles."""
+        placed = 0
+        # We use a loop to keep trying until we successfully place 'count' traps
+        while placed < count:
+            x = self.get_random_x()
+            y = self.get_random_y()
+
+            # This ensures we don't overwrite walls (■), fruits (?),
+            # the exit (E), or the player's current spot (@)
+            if self.is_empty(x, y):
+                # Double check to make sure we aren't exactly on the player
+                if x != self.player.pos_x or y != self.player.pos_y:
+                    self.set(x, y, "X")
+                    placed += 1

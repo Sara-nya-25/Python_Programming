@@ -15,6 +15,7 @@ g.make_walls()
 g.make_internal_walls() # Creates the new contiguous internal walls
 g.place_exit()
 pickups.randomize(g)
+g.place_traps(8)
 
 # A dictionary to map keys to (dx, dy) movements
 moves = {
@@ -98,6 +99,14 @@ while command not in ["q", "x"]:
             # g.clear(player.pos_x, player.pos_y)
             g.clear(new_x, new_y)
 
+        # TRAP LOGIC
+        if tile_content == "X":
+            if grace_steps > 0:
+                print("🛡️ Grace Period blocked the Trap! (0 points lost)")
+            else:
+                print("💥 KA-BOOM! You hit a trap! -10 points")
+                score -= 10
+
         # CHECK: Is the place you are going ALREADY lava?
         if tile_content == "~":
             if grace_steps > 0:
@@ -109,13 +118,15 @@ while command not in ["q", "x"]:
             if grace_steps > 0:
                 # No points deducted for regular movement during grace period
                 print("🛡️ Grace Period: Free move!")
-            else:
-                score -= 1  # Regular movement cost
+            elif tile_content != 'X' and not item_found:
+                if grace_steps == 0:
+                    score -= 1  # Regular movement cost
                 # 3. Decrease Grace Period after movement
         if grace_steps > 0 and not item_found:
            grace_steps -= 1
         # Before moving, turn the current floor tile into lava
-        g.set(player.pos_x, player.pos_y, "~")
+        if tile_content != "X":
+            g.set(player.pos_x, player.pos_y, "~")
 
         # Handle items at the new location
         #maybe_item = g.get(new_x, new_y)
