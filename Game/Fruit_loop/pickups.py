@@ -75,3 +75,32 @@ def spawn_single_fruit(grid):
             grid.set(x, y, new_fruit)
             return True
     return False
+
+
+class SpecialItem:
+    def __init__(self, name, symbol):
+        self.name = name
+        self.symbol = symbol
+
+    def __str__(self):
+        return self.symbol
+
+
+# Helper to place them in game.py or pickups.py
+def place_chests_and_keys(grid, count=1):
+    for _ in range(count):
+        # Place a Key
+        placed_key = False
+        while not placed_key:
+            kx, ky = grid.get_random_x(), grid.get_random_y()
+            if grid.is_empty(kx, ky):
+                grid.set(kx, ky, SpecialItem("Key", "K"))
+                placed_key = True
+
+        # Place a Chest
+        placed_chest = False
+        while not placed_chest:
+            cx, cy = grid.get_random_x(), grid.get_random_y()
+            if grid.is_empty(cx, cy):
+                grid.set(cx, cy, "C")  # Using a string "C" for the Chest logic
+                placed_chest = True

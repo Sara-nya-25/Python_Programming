@@ -16,7 +16,7 @@ g.make_internal_walls() # Creates the new contiguous internal walls
 g.place_exit()
 pickups.randomize(g)
 g.place_traps(8)
-
+pickups.place_chests_and_keys(g, 1)
 # A dictionary to map keys to (dx, dy) movements
 moves = {
     "w": (0, -1), # Up
@@ -27,12 +27,16 @@ moves = {
 print("--------FRUIT LOOPS GAME START---------")
 def print_instructions():
     print("********** Instructions **********")
-    print("'@' - Player \n'O' - Fruits you pickup\n'~' - Lava trail\n'X' - Trap")
+    print("SYMBOLS USED")
+    print("'@' - Player \n'O' - Fruits you pickup (+10)\n'~' - Lava trail (-5)\n'X' - Trap(-10)\n'K' - Key\n'C' - Chest(+100)\n'q' - quit or exit")
     print("For every step on TRAP 'X' -10 points")
     print("For every MOVE -1 point and you leave ONE '~' lava trail ")
     print("For every Step into LAVA '~' -5 points")
-    print("Press 'p' to see your pickups")
+    print("Pick 'K' to open chest 'C' to grab surprise points")
+    print("Press 'b' to place Bombs 💣")
+    print("Press 'p' to see fruit list, Press 'i' to see instructions")
     print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
+    print("For every 25 moves, new fruit '?' is placed in the grid")
     print("Press 'q' or 'x' to quit.")
     print(f"You are given {score} points initially.")
 
@@ -58,7 +62,7 @@ while command not in ["q", "x"]:
     command = input("Use WASD to move, Q/X to quit. ")
     command = command.casefold()[:1]
     # Handle Quit
-    if command in ["q", "x"]:
+    if command == 'q':
         break  # Exit the loop right away without running movement code
     # Display Instructions 'i'
     if command == 'i':
@@ -90,7 +94,26 @@ while command not in ["q", "x"]:
         new_y = player.pos_y + dy
         tile_content = g.get(new_x, new_y)
         item_found = False
+        # --- KEY & CHEST LOGIC START ---
+        # 1. Picking up a Key
+        if isinstance(tile_content, pickups.SpecialItem) and tile_content.name == "Key":
+            inventory.append("Key")
+            print("🔑 You found a KEY!")
+            g.clear(new_x, new_y)
+            item_found = True  # This prevents losing a move point if you like
 
+        # 2. Opening a Chest
+        if tile_content == "C":
+            if "Key" in inventory:
+                inventory.remove("Key")
+                score += 100
+                print("🎁 TREASURE! Chest opened! +100 points")
+                g.clear(new_x, new_y)
+                item_found = True
+            else:
+                print("🔒 Locked! You need a key 'k'.")
+                continue  # Stops player from moving onto the chest without a key
+        # --- KEY & CHEST LOGIC END ---
         if tile_content == "E":
             if len(inventory) == 7:
                 print("\nVICTORY! You reached the exit with all fruits!")
@@ -106,7 +129,7 @@ while command not in ["q", "x"]:
             grace_steps = 5  # <--- NEW: Grant 5 protected steps
             item_found = True
             print(f"You found a {tile_content.name}, +{tile_content.value} points. ")
-            print(f"🛡️ GRACE PERIOD: You get {grace_steps} steps of protection!")
+            #print(f"🛡️ GRACE PERIOD: You get {grace_steps} steps of protection!")
             # g.clear(player.pos_x, player.pos_y)
             g.clear(new_x, new_y)
 
