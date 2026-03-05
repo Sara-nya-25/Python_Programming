@@ -43,10 +43,14 @@ def print_status(game_grid):
     print(f"Your Score {score} points.")
     if grace_steps > 0:
         print(f"🛡️ GRACE PERIOD: {grace_steps} steps of protection left!")
-    print(game_grid)
-
+    #print(game_grid)
+    print(game_grid.__str__(active_bombs))
+    if active_bombs:
+        for b in active_bombs:
+            print(f"💣 Bomb at ({b[0]}, {b[1]}) exploding in {b[2]} moves!")
 
 command = "a"
+active_bombs = []
 
 while command not in ["q", "x"]:
     print_status(g)
@@ -70,7 +74,12 @@ while command not in ["q", "x"]:
                 print(f"- {item}")
         input("\nPress Enter to continue...")
         continue  # Skip the movement logic for this turn
-
+    # Handle placing a bomb
+    if command == "b":
+         # Place bomb at player's current position
+        active_bombs.append([player.pos_x, player.pos_y, 3])
+        print("💣 BOMB PLACED! Move 3 times to detonate!")
+        continue
     dx, dy = 0, 0
     if command in moves:
         dx, dy = moves[command]
@@ -128,7 +137,7 @@ while command not in ["q", "x"]:
            grace_steps -= 1
         # Before moving, turn the current floor tile into lava
         old_tile = g.get(player.pos_x, player.pos_y)
-        if old_tile != "X":
+        if old_tile not in ["X", "E"]:
             g.set(player.pos_x, player.pos_y, "~")
 
         # Handle items at the new location
@@ -139,6 +148,35 @@ while command not in ["q", "x"]:
         player.pos_y = new_y
 
         move_count += 1
+        """ BOMB logic start"""
+        bombs_to_remove = []
+        for bomb in active_bombs:
+            bomb[2] -= 1  # Countdown fuse
+
+            if bomb[2] <= 0:
+                print("\n💥 KABOOM!")
+                bx, by, _ = bomb
+                # 3x3 Explosion Loop
+                for nx in range(bx - 1, bx + 2):
+                    for ny in range(by - 1, by + 2):
+                        if g.is_in_bounds(nx, ny):
+                            # Prevent destroying the very outer edges of the map
+                            is_edge = (nx == 0 or nx == g.width - 1 or
+                                       ny == 0 or ny == g.height - 1)
+
+                            target = g.get(nx, ny)
+                            if not is_edge and target in [g.wall, "X", "~"]:
+                                g.set(nx, ny, g.empty)
+
+                            if nx == player.pos_x and ny == player.pos_y:
+                                print("🔥 Caught in blast! -15 points")
+                                score -= 15
+                bombs_to_remove.append(bomb)
+
+        for b in bombs_to_remove:
+            active_bombs.remove(b)
+
+
         if move_count % 25 == 0:
             if pickups.spawn_single_fruit(g):
                 print("\n✨ The soil is fertile! A new fruit has sprouted somewhere! ✨")

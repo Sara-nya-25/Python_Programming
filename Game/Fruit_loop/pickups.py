@@ -8,6 +8,8 @@ class Item:
     def __str__(self):
         return self.symbol
 
+    def __repr__(self):  # Add this for better debugging
+        return self.symbol
 
 pickups = [Item("pear"), Item("Strawberry"), Item("Cherry"), Item("watermelon"), Item("banana"), Item("apple"),
            Item("Orange")]

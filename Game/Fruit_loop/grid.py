@@ -30,14 +30,17 @@ class Grid:
     def clear(self, x,y):
         self.set(x, y, self.empty)
 
-    def __str__(self):
-
+    def __str__(self, bombs=None):
+        if bombs is None:
+            bombs = []
         xs = ""
         for y in range(len(self.data)):
             row= self.data[y]
             for x in range(len(row)):
                 if x == self.player.pos_x and y == self.player.pos_y:
                     xs += "@"
+                elif any(b[0] == x and b[1] == y for b in bombs):
+                    xs += "💣"
                 else:
                     xs += str(row[x])
             xs += "\n"
@@ -126,3 +129,6 @@ class Grid:
                 if x != self.player.pos_x or y != self.player.pos_y:
                     self.set(x, y, "X")
                     placed += 1
+    # prevent bomb explosion when near edges of map
+    def is_in_bounds(self, x, y):
+        return 0 <= x < self.width and 0 <= y < self.height
