@@ -1,33 +1,10 @@
-from grid import Grid
-from player import Player
-import pickups
+from Fruit_loop.grid import Grid
+from Fruit_loop.player import Player
+import Fruit_loop.pickups as pickups
 
 
-score = 30
-inventory = []
-move_count = 0  # check for moves, after 25 moves new fruit is placed
-grace_steps = 0 # after u pickup a fruit, move 5 steps without reducing score
-active_bombs = []
 
-g = Grid()
-start_x, start_y = g.get_center()
-player = Player(start_x, start_y)
-g.set_player(player)
-g.make_walls()
-g.make_internal_walls() # Creates the new contiguous internal walls
-g.place_exit()
-pickups.randomize(g)
-g.place_traps(8)
-pickups.place_chests_and_keys(g, 1)
-# A dictionary to map keys to (dx, dy) movements
-moves = {
-    "w": (0, -1), # Up
-    "s": (0, 1),  # Down
-    "a": (-1, 0), # Left
-    "d": (1, 0)   # Right
-}
-
-def print_instructions():
+def print_instructions(score):
     print("********** Instructions **********")
     print("SYMBOLS USED")
     print("'@' - Player \n'O' - Fruits you pickup (+10)\n'~' - Lava trail (-5)\n'X' - Trap(-10)\n'K' - Key\n'C' - Chest(+100)\n'q' - quit or exit")
@@ -42,7 +19,7 @@ def print_instructions():
     print("Press 'q' or 'x' to quit.")
     print(f"You are given {score} points initially.")
 
-def print_status(game_grid):
+def print_status(game_grid, score, grace_steps, active_bombs):
     print("--------FRUIT LOOPS GAME---------")
     print(f"Your Score {score} points.")
     if grace_steps > 0:
@@ -53,174 +30,203 @@ def print_status(game_grid):
         for b in active_bombs:
             print(f"💣 Bomb at ({b[0]}, {b[1]}) exploding in {b[2]} moves!")
 
-print("--------FRUIT LOOPS GAME START---------")
-print_instructions()
+def play_game():
+    score = 30
+    inventory = []
+    move_count = 0  # check for moves, after 25 moves new fruit is placed
+    grace_steps = 0 # after u pickup a fruit, move 5 steps without reducing score
+    active_bombs = []
+    g = Grid()
+    start_x, start_y = g.get_center()
+    player = Player(start_x, start_y)
+    g.set_player(player)
+    g.make_walls()
+    g.make_internal_walls() # Creates the new contiguous internal walls
+    g.place_exit()
+    pickups.randomize(g)
+    g.place_traps(8)
+    pickups.place_chests_and_keys(g, 1)
+    # A dictionary to map keys to (dx, dy) movements
+    moves = {
+        "w": (0, -1), # Up
+        "s": (0, 1),  # Down
+        "a": (-1, 0), # Left
+        "d": (1, 0)   # Right
+    }
 
-while True:
-    print_status(g)
 
-    command = input("Use WASD to move, Q/X to quit. ")
-    command = command.casefold()[:1]
-    # Handle Quit
-    if command in ['q', 'x']:
-        break  # Exit the loop right away without running movement code
-    # Display Instructions 'i'
-    if command == 'i':
-        print_instructions()
-        continue
-    # Handle the pickup list
-    if command == "p":
-        if not inventory:
-            print("\nYour inventory is empty.")
-        else:
-            print("\n--- Pickup List ---")
-            for item in inventory:
-                print(f"- {item}")
-        input("\nPress Enter to continue...")
-        continue  # Skip the movement logic for this turn
-    # Handle placing a bomb
-    if command == "b":
-         # Place bomb at player's current position
-        active_bombs.append([player.pos_x, player.pos_y, 3])
-        print("💣 BOMB PLACED! Move 3 times to detonate!")
-        continue
-    dx, dy = 0, 0
-    if command in moves:
-        dx, dy = moves[command]
 
-        if player.can_move(dx, dy, g):
+    print("--------FRUIT LOOPS GAME START---------")
+    print_instructions(score)
 
-            new_x = player.pos_x + dx
-            new_y = player.pos_y + dy
-            tile_content = g.get(new_x, new_y)
-            item_found = False
-            # --- KEY & CHEST LOGIC START ---
-            # 1. Picking up a Key
-            if isinstance(tile_content, pickups.SpecialItem) and tile_content.name == "Key":
-                inventory.append("Key")
-                print("🔑 You found a KEY!")
-                g.clear(new_x, new_y)
-                item_found = True  # This prevents losing a move point if you like
+    while True:
+        print_status(g, score, grace_steps, active_bombs)
 
-            # 2. Opening a Chest
-            if tile_content == "C":
-                if "Key" in inventory:
-                    inventory.remove("Key")
-                    score += 100
-                    print("🎁 TREASURE! Chest opened! +100 points")
-                    g.clear(new_x, new_y)
-                    item_found = True
-                else:
-                    print("🔒 Locked! You need a key 'k'.")
-                    continue  # Stops player from moving onto the chest without a key
-            # --- KEY & CHEST LOGIC END ---
-            if tile_content == "E":
-                if len(inventory) == 7:
-                    print("\nVICTORY! You reached the exit with all fruits!")
-                    break
-                else:
-                    print(f"\nThe exit is locked! Collect all fruits first.")
-                    # Don't move onto the exit tile if it's locked to avoid overwriting it with lava
-                    continue
-
-            if isinstance(tile_content, pickups.Item):
-                score += tile_content.value
-                inventory.append(tile_content.name)
-                grace_steps = 5  # <--- NEW: Grant 5 protected steps
-                item_found = True
-                print(f"You found a {tile_content.name}, +{tile_content.value} points. ")
-                #print(f"🛡️ GRACE PERIOD: You get {grace_steps} steps of protection!")
-                # g.clear(player.pos_x, player.pos_y)
-                g.clear(new_x, new_y)
-
-            # TRAP LOGIC
-            if tile_content == "X":
-                if grace_steps > 0:
-                    print("🛡️ Grace Period blocked the Trap! (0 points lost)")
-                else:
-                    print("💥 KA-BOOM! You hit a trap! -10 points")
-                    score -= 10
-
-            # CHECK: Is the place you are going ALREADY lava?
-            if tile_content == "~":
-                if grace_steps > 0:
-                    print(f"🛡️ Grace Period blocked the lava damage!")
-                else:
-                    print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
-                    score -= 5
+        command = input("Use WASD to move, Q/X to quit. ")
+        command = command.casefold()[:1]
+        # Handle Quit
+        if command in ['q', 'x']:
+            break  # Exit the loop right away without running movement code
+        # Display Instructions 'i'
+        if command == 'i':
+            print_instructions(score)
+            continue
+        # Handle the pickup list
+        if command == "p":
+            if not inventory:
+                print("\nYour inventory is empty.")
             else:
-                if grace_steps > 0:
-                    # No points deducted for regular movement during grace period
-                    print("🛡️ Grace Period: Free move!")
-                elif tile_content != 'X' and not item_found:
-                    if grace_steps == 0:
-                        score -= 1  # Regular movement cost
-                    # 3. Decrease Grace Period after movement
-            if grace_steps > 0 and not item_found:
-               grace_steps -= 1
-            # Before moving, turn the current floor tile into lava
-            old_tile = g.get(player.pos_x, player.pos_y)
-            if old_tile not in ["X", "E"]:
-                g.set(player.pos_x, player.pos_y, "~")
+                print("\n--- Pickup List ---")
+                for item in inventory:
+                    print(f"- {item}")
+            input("\nPress Enter to continue...")
+            continue  # Skip the movement logic for this turn
+        # Handle placing a bomb
+        if command == "b":
+             # Place bomb at player's current position
+            active_bombs.append([player.pos_x, player.pos_y, 3])
+            print("💣 BOMB PLACED! Move 3 times to detonate!")
+            continue
+        dx, dy = 0, 0
+        if command in moves:
+            dx, dy = moves[command]
 
-            # Handle items at the new location
-            #maybe_item = g.get(new_x, new_y)
+            if player.can_move(dx, dy, g):
 
-            # Update position
-            player.pos_x = new_x
-            player.pos_y = new_y
+                new_x = player.pos_x + dx
+                new_y = player.pos_y + dy
+                tile_content = g.get(new_x, new_y)
+                item_found = False
+                # --- KEY & CHEST LOGIC START ---
+                # 1. Picking up a Key
+                if isinstance(tile_content, pickups.SpecialItem) and tile_content.name == "Key":
+                    inventory.append("Key")
+                    print("🔑 You found a KEY!")
+                    g.clear(new_x, new_y)
+                    item_found = True  # This prevents losing a move point if you like
 
-            move_count += 1
-            """ BOMB logic start"""
-            bombs_to_remove = []
-            for bomb in active_bombs:
-                bomb[2] -= 1  # Countdown fuse
+                # 2. Opening a Chest
+                if tile_content == "C":
+                    if "Key" in inventory:
+                        inventory.remove("Key")
+                        score += 100
+                        print("🎁 TREASURE! Chest opened! +100 points")
+                        g.clear(new_x, new_y)
+                        item_found = True
+                    else:
+                        print("🔒 Locked! You need a key 'k'.")
+                        continue  # Stops player from moving onto the chest without a key
+                # --- KEY & CHEST LOGIC END ---
+                if tile_content == "E":
+                    if len(inventory) == 7:
+                        print("\nVICTORY! You reached the exit with all fruits!")
+                        break
+                    else:
+                        print(f"\nThe exit is locked! Collect all fruits first.")
+                        # Don't move onto the exit tile if it's locked to avoid overwriting it with lava
+                        continue
 
-                if bomb[2] <= 0:
-                    print("\n💥 KABOOM!")
-                    bx, by, _ = bomb
-                    # 3x3 Explosion Loop
-                    for nx in range(bx - 1, bx + 2):
-                        for ny in range(by - 1, by + 2):
-                            if g.is_in_bounds(nx, ny):
-                                # Prevent destroying the very outer edges of the map
-                                is_edge = (nx == 0 or nx == g.width - 1 or
-                                           ny == 0 or ny == g.height - 1)
+                if isinstance(tile_content, pickups.Item):
+                    score += tile_content.value
+                    inventory.append(tile_content.name)
+                    grace_steps = 5  # <--- NEW: Grant 5 protected steps
+                    item_found = True
+                    print(f"You found a {tile_content.name}, +{tile_content.value} points. ")
+                    #print(f"🛡️ GRACE PERIOD: You get {grace_steps} steps of protection!")
+                    # g.clear(player.pos_x, player.pos_y)
+                    g.clear(new_x, new_y)
 
-                                target = g.get(nx, ny)
-                                if not is_edge and target in [g.wall, "X", "~", "O"]:
-                                    g.set(nx, ny, g.empty)
+                # TRAP LOGIC
+                if tile_content == "X":
+                    if grace_steps > 0:
+                        print("🛡️ Grace Period blocked the Trap! (0 points lost)")
+                    else:
+                        print("💥 KA-BOOM! You hit a trap! -10 points")
+                        score -= 10
 
-                                if nx == player.pos_x and ny == player.pos_y:
-                                    print("🔥 Caught in blast! -15 points")
-                                    score -= 15
-                    bombs_to_remove.append(bomb)
+                # CHECK: Is the place you are going ALREADY lava?
+                if tile_content == "~":
+                    if grace_steps > 0:
+                        print(f"🛡️ Grace Period blocked the lava damage!")
+                    else:
+                        print("Ouch! You are in lava! -5 points") # Stepping on to lava tile '~' costs -5 points
+                        score -= 5
+                else:
+                    if grace_steps > 0:
+                        # No points deducted for regular movement during grace period
+                        print("🛡️ Grace Period: Free move!")
+                    elif tile_content != 'X' and not item_found:
+                        if grace_steps == 0:
+                            score -= 1  # Regular movement cost
+                        # 3. Decrease Grace Period after movement
+                if grace_steps > 0 and not item_found:
+                   grace_steps -= 1
+                # Before moving, turn the current floor tile into lava
+                old_tile = g.get(player.pos_x, player.pos_y)
+                if old_tile not in ["X", "E"]:
+                    g.set(player.pos_x, player.pos_y, "~")
 
-            for b in bombs_to_remove:
-                active_bombs.remove(b)
+                # Handle items at the new location
+                #maybe_item = g.get(new_x, new_y)
+
+                # Update position
+                player.pos_x = new_x
+                player.pos_y = new_y
+
+                move_count += 1
+                """ BOMB logic start"""
+                bombs_to_remove = []
+                for bomb in active_bombs:
+                    bomb[2] -= 1  # Countdown fuse
+
+                    if bomb[2] <= 0:
+                        print("\n💥 KABOOM!")
+                        bx, by, _ = bomb
+                        # 3x3 Explosion Loop
+                        for nx in range(bx - 1, bx + 2):
+                            for ny in range(by - 1, by + 2):
+                                if g.is_in_bounds(nx, ny):
+                                    # Prevent destroying the very outer edges of the map
+                                    is_edge = (nx == 0 or nx == g.width - 1 or
+                                               ny == 0 or ny == g.height - 1)
+
+                                    target = g.get(nx, ny)
+                                    if not is_edge and target in [g.wall, "X", "~", "O"]:
+                                        g.set(nx, ny, g.empty)
+
+                                    if nx == player.pos_x and ny == player.pos_y:
+                                        print("🔥 Caught in blast! -15 points")
+                                        score -= 15
+                        bombs_to_remove.append(bomb)
+
+                for b in bombs_to_remove:
+                    active_bombs.remove(b)
 
 
-            if move_count % 25 == 0:
-                if pickups.spawn_single_fruit(g):
-                    print("\n✨ The soil is fertile! A new fruit has sprouted somewhere! ✨")
+                if move_count % 25 == 0:
+                    if pickups.spawn_single_fruit(g):
+                        print("\n✨ The soil is fertile! A new fruit has sprouted somewhere! ✨")
 
-        elif command in moves:
-            # This triggers only if the command was a move but can_move returned False
-            print("\nOOPS! You bumped into a wall!")
-            score -= 2  # Optional: penalty for bumping into walls
+            elif command in moves:
+                # This triggers only if the command was a move but can_move returned False
+                print("\nOOPS! You bumped into a wall!")
+                score -= 2  # Optional: penalty for bumping into walls
 
-    if score < 0:
-        print("\nGAME OVER: You stayed in the lava too long!")
-        break
-    #player.move(dx, dy, g)
-if score > 80:
-    print("\nBrilliant! You are a Star Player ⭐⭐⭐!" )
-    print("You Won a Gold Trophy 🏆")
-elif 50 < score < 80:
-    print("\nExcellent! You are Amazing!")
-    print("You Won a Silver 🥈")
-elif 30 < score < 50:
-    print("Good Playing!")
-    print("You won a Bronze medal 🥉")
+        if score < 0:
+            print("\nGAME OVER: You stayed in the lava too long!")
+            break
+        #player.move(dx, dy, g)
+    if score > 80:
+        print("\nBrilliant! You are a Star Player ⭐⭐⭐!" )
+        print("You Won a Gold Trophy 🏆")
+    elif 50 < score < 80:
+        print("\nExcellent! You are Amazing!")
+        print("You Won a Silver 🥈")
+    elif 30 < score < 50:
+        print("Good Playing!")
+        print("You won a Bronze medal 🥉")
 
-print("Thank you! Play Again!")
+    print("Thank you! Play Again!")
+
+if __name__ == "__main__":
+    play_game()

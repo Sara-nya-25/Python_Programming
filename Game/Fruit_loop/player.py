@@ -1,5 +1,5 @@
 
-import pickups
+from Fruit_loop.pickups import pickups
 class Player:
     marker = "@"
 
