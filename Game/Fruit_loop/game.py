@@ -27,7 +27,7 @@ moves = {
 print("--------FRUIT LOOPS GAME START---------")
 def print_instructions():
     print("********** Instructions **********")
-    print("'@' - Player \n'?' - Fruits you pickup\n'~' - Lava trail\n'X' - Trap")
+    print("'@' - Player \n'O' - Fruits you pickup\n'~' - Lava trail\n'X' - Trap")
     print("For every step on TRAP 'X' -10 points")
     print("For every MOVE -1 point and you leave ONE '~' lava trail ")
     print("For every Step into LAVA '~' -5 points")
@@ -37,6 +37,7 @@ def print_instructions():
     print(f"You are given {score} points initially.")
 
 print_instructions()
+active_bombs = []
 
 def print_status(game_grid):
     print("--------FRUIT LOOPS GAME---------")
@@ -50,7 +51,6 @@ def print_status(game_grid):
             print(f"💣 Bomb at ({b[0]}, {b[1]}) exploding in {b[2]} moves!")
 
 command = "a"
-active_bombs = []
 
 while command not in ["q", "x"]:
     print_status(g)
@@ -165,7 +165,7 @@ while command not in ["q", "x"]:
                                        ny == 0 or ny == g.height - 1)
 
                             target = g.get(nx, ny)
-                            if not is_edge and target in [g.wall, "X", "~"]:
+                            if not is_edge and target in [g.wall, "X", "~", "O"]:
                                 g.set(nx, ny, g.empty)
 
                             if nx == player.pos_x and ny == player.pos_y:

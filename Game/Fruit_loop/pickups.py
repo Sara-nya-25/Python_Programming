@@ -1,6 +1,6 @@
 import random
 class Item:
-    def __init__(self, name, value=20, symbol="?"):
+    def __init__(self, name, value=20, symbol="O"):
         self.name = name
         self.value = value
         self.symbol = symbol
