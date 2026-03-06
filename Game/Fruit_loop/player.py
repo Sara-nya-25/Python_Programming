@@ -43,3 +43,24 @@ class Player:
             return False
         return True
 
+    def jump(self, dx, dy, grid):
+        """
+        Version 2 Requirement: Jump (J + WASD).
+        Moves two squares in the given direction.
+        """
+        # Calculate landing spot (2 steps away)
+        jump_x, jump_y = dx * 2, dy * 2
+
+        # If the jump destination is valid, move there
+        if self.can_move(jump_x, jump_y, grid):
+            self.pos_x += jump_x
+            self.pos_y += jump_y
+            return True
+
+        # If jumping into a wall, Version 2 says it's like a normal step
+        elif self.can_move(dx, dy, grid):
+            self.pos_x += dx
+            self.pos_y += dy
+            return True
+
+        return False
