@@ -83,8 +83,6 @@ This project is organized as a formal Python package to demonstrate clean archit
 ## 📝 Planned Improvements (Version 3 Tasks)
 [ ] AI Enemies: Implement 1-3 enemies with pathfinding logic.
 
-[ ] Jump Command: Implement J + WASD for two-step movement.
-
 [ ] Shovel Item: Add a tool to destroy specific wall segments.
 
 [ ] Trap Disarm: Add the T command to safely remove traps.
