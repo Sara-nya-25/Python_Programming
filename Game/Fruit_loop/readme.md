@@ -21,7 +21,7 @@ Game/
     └── pickups.py    # Item and trap logic
 ```
 ## Running the Game
-You can run the game from the root directory (FruitLoopsProject/) using either of these methods:
+You can run the game from the root directory (Game/) using either of these methods:
 ### Method A: Running as a Module
 Bash
 python -m Fruit_loop.game

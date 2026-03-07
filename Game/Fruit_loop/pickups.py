@@ -9,7 +9,7 @@ class Item:
         return self.symbol
 
     def __repr__(self):  # Add this for better debugging
-        return self.symbol
+        return f"Item(name='{self.name}', symbol='{self.symbol}', value={self.value})"
 
 pickups = [Item("pear"), Item("Strawberry"), Item("Cherry"), Item("watermelon"), Item("banana"), Item("apple"),
            Item("Orange")]
