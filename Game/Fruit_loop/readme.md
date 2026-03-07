@@ -33,6 +33,7 @@ python main.py
 ### Controls
 ### W / A / S / D: Move Up, Left, Down, or Right.
 ### Jump + W / A / S / D: Moves 2 tiles Up, Left, Down, or Right.
+### 'O' - Fruits to pickup, 'T'- Traps, 'K'-Key to Chest, 'C'- Chest of treasure
 
 **B: Place a Bomb (explodes in 3 moves).**
 
@@ -54,6 +55,8 @@ python main.py
 
 - **Traps (X):** Stepping on a trap costs 10 points. Traps stay on the board!
 
+- **Bombs (b):** 💣 destroys walls and traps surrounding it, gets activated in 3 moves, player stuck in explosion looses -15 points.
+
 - **Chests & Keys:** Find a Key (K) to unlock a Chest (C) for a 100-point treasure.
 
 - **Fertile Soil:** Every 25 moves, a new fruit 'O' randomly sprouts on the map.
@@ -70,9 +73,30 @@ This project is organized as a formal Python package to demonstrate clean archit
 
 **Encapsulation:** Game state (score, inventory, move counts) is managed within the play_game() function scope to avoid global variable conflicts.
 
-**Grid Logic:** Walls are generated using for loops in grid.py to create contiguous obstacles without creating unreachable areas.
+**Grid Logic:** Walls are generated using for loops in grid.py to create contiguous obstacles without creating unreachable areas. This handles the coordinate system and boundary logic.
 
-## Development with PyCharm
+**Player class:** This encapsulates the player's physical state. By keeping movement validation ensures the player object "knows" its own physical limits.
+
+**Pickups:** This acts as a database for game items. It maps symbols (like 'O' or 'K') to values and names, allowing to balance the game's economy (points) in one place.
+
+**Game Logic:** The Game engine that connects everything. Managing the high-level score and inventory, Enforcing rules (like the Exit check or Bomb explosions) and handling state changes.
+
+**Unit Test cases:** Unit testcases are used as part of TDD to test grid initialization, State resetting, Make walls, jump test, jump on wall(negative and positive), Exit logic.  
+
+### 🚀 Benefits of this Structure
+
+- **Scalability:** 
+- **Easier Debugging**
+- **Reusability**
+
+## 📝 Planned Improvements (Version 3 Tasks)
+[ ] AI Enemies: Implement 1-3 enemies with pathfinding logic.
+
+[ ] Shovel Item: Add a tool to destroy specific wall segments.
+
+[ ] Trap Disarm: Add the T command to safely remove traps.
+
+## Run Configuration with PyCharm
 - To set up a Run Configuration:
 
 - Go to Edit Configurations.
@@ -82,12 +106,3 @@ This project is organized as a formal Python package to demonstrate clean archit
 - Enter Fruit_loop.game.
 
 - Set the Working Directory to the root project folder (the parent of Fruit_loop).
-
-## 📝 Planned Improvements (Version 3 Tasks)
-[ ] AI Enemies: Implement 1-3 enemies with pathfinding logic.
-
-[ ] Shovel Item: Add a tool to destroy specific wall segments.
-
-[ ] Trap Disarm: Add the T command to safely remove traps.
-
-[ ] TDD: Implement unit tests for movement and scoring logic using pytest.
