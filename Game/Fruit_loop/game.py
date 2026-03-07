@@ -11,7 +11,7 @@ def print_instructions(score):
           "\n'~' - Lava trail (-5 points)\n'X' - Trap(-10 points)"
           "\n'K' - Key to open Chest C\n'C' - Chest(+100 points)"
           "\n'j' + Move(wasd), Jump 2 tiles"
-          "\n'q' - quit or exit\n'Wrong command/ Wrong Move'- (-2 points)")
+          "\n'q' - quit or exit\nBump into wall (-2 points)")
     print("For every MOVE -1 point and you leave ONE '~' lava trail ")
     print("For each step on lava '~' -5 & each step on Trap ' -10")
     print("Pick KEY 'K' to open TREASURE CHEST 'C' to grab Surprise points")
@@ -155,7 +155,7 @@ def play_game():
                     success = True
 
             if success:
-                score -= 1
+                #score -= 1
                 if g.get(old_x, old_y) not in ["X", "E", "C", "K"]:
                     g.set(old_x, old_y, "~")
                 new_x, new_y = player.pos_x, player.pos_y
@@ -229,13 +229,17 @@ def play_game():
                     break
             else:
                 print("\nOOPS! You bumped into a wall -2 points!")
-                score -=2
+                if grace_steps > 0:
+                    grace_steps -= 1
+                    print(f"🛡️ Shield protected your score!")
+                else:
+                    score -=2
 
                 #elif command in moves:
         else:
             # This triggers only if the command was a move but can_move returned False
-            print("\nOOPS! Wrong move -2 points!")
-            score -= 2  # Optional: penalty for bumping into walls
+            print("\nInvalid Command!")
+
 
         #player.move(dx, dy, g)
     if score > 80:
