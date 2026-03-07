@@ -32,10 +32,11 @@ python main.py
 ## 🎮 How to Play
 ### Controls
 ### W / A / S / D: Move Up, Left, Down, or Right.
+### Jump + W / A / S / D: Moves 2 tiles Up, Left, Down, or Right.
 
 **B: Place a Bomb (explodes in 3 moves).**
 
-**I: View your current Inventory.**
+**H: View Game Instructions and Help.**
 
 **P: List the fruits you have collected.**
 
@@ -45,9 +46,9 @@ python main.py
 
 - **The Floor is Lava:** Every step costs 1 point and leaves a lava trail (~).
 
-- **Lava Damage:** Stepping back into existing lava costs 5 points.
+- **Lava Damage:** Stepping back into existing lava costs -5 points.
 
-- **Fruit Salad:** Collecting fruit (O) grants 20 points.
+- **Fruits:** Collecting a fruit 'O' grants 20 points.
 
 - **Grace Period:** After picking up an item, you get 5 steps of "Free Move" protection where no points are deducted for movement or hazards.
 
@@ -55,7 +56,9 @@ python main.py
 
 - **Chests & Keys:** Find a Key (K) to unlock a Chest (C) for a 100-point treasure.
 
-- **Fertile Soil:** Every 25 moves, a new fruit randomly sprouts on the map.
+- **Fertile Soil:** Every 25 moves, a new fruit 'O' randomly sprouts on the map.
+
+- **Wrong Command:** Every Wrong command or Wrong move like 'Bump on walls'/ 'Exit before all fruits picked' -2 points.
 
 - **The Exit (E):** Collect all 7 initial items to unlock the exit and win the game.
 
