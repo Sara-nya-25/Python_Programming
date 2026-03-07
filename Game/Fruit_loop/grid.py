@@ -9,8 +9,8 @@ class Grid:
     #symbols = ["🟩","■","■"]
 
     def __init__(self):
-        self.data = [[self.empty for y in range(self.width)] for z in range(self.height)]
-
+        self.data = [[self.empty for _ in range(self.width)] for _ in range(self.height)]
+        self.player = None
 
     def get(self, x, y):
         return self.data[y][x]
