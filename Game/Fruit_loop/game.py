@@ -7,17 +7,18 @@ import Fruit_loop.pickups as pickups
 def print_instructions(score):
     print("********** Instructions **********")
     print("SYMBOLS USED")
-    print("'@' - Player \n'O' - Fruits you pickup (+10 points)"
+    print("'@' - Player \n'O' - Fruits you pickup (+20 points)"
           "\n'~' - Lava trail (-5 points)\n'X' - Trap(-10 points)"
           "\n'K' - Key to open Chest C\n'C' - Chest(+100 points)"
           "\n'j' + Move(wasd), Jump 2 tiles"
-          "\n'q' - quit or exit\n'Wrong command'- (-2 points)")
+          "\n'q' - quit or exit\n'Wrong command/ Wrong Move'- (-2 points)")
     print("For every MOVE -1 point and you leave ONE '~' lava trail ")
+    print("For each step on lava '~' -5 & each step on Trap ' -10")
     print("Pick KEY 'K' to open TREASURE CHEST 'C' to grab Surprise points")
     print("Press 'b' to place Bombs 💣, it blasts after 3 moves")
     print("Press 'p' to see fruit list, Press 'h' to see instructions")
     print("Use Keys 'w'- Move up, 's'- Move down, 'a'- Move left, 'd'- Move right")
-    print("For every 25 moves, new fruit '?' is placed in the grid")
+    print("For every 25 moves, new fruit 'O' is placed in the grid")
     print("Press 'q' or 'x' to quit.")
     print(f"You are given {score} points initially.")
 
