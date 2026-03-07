@@ -11,7 +11,7 @@ Clone or download this project folder.
 Ensure your directory structure looks like this:
 
 ```text
-FruitLoopsProject/
+Game/
 ├── main.py           # The game launcher
 └── Fruit_loop/       # The source package
     ├── __init__.py
