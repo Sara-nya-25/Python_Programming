@@ -81,3 +81,25 @@ class TestGridGame(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+"""
+Test Results:
+=============================================== test session starts ================================================
+platform win32 -- Python 3.14.0, pytest-9.0.2, pluggy-1.6.0 -- C:\Python314\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Elev\PycharmProjects\Python_Programming
+configfile: pytest.ini
+collected 9 items                                                                                                   
+
+Game/test_game.py::TestGridGame::test_failed_jump_out_of_bounds PASSED                                        [ 11%]
+Game/test_game.py::TestGridGame::test_grid_initialization PASSED                                              [ 22%]
+Game/test_game.py::TestGridGame::test_is_in_bounds PASSED                                                     [ 33%]
+Game/test_game.py::TestGridGame::test_jump_landing_on_wall PASSED                                             [ 44%]
+Game/test_game.py::TestGridGame::test_make_walls PASSED                                                       [ 55%]
+Game/test_game.py::TestGridGame::test_place_exit PASSED                                                       [ 66%]
+Game/test_game.py::TestGridGame::test_player_can_move_empty PASSED                                            [ 77%]
+Game/test_game.py::TestGridGame::test_player_cannot_move_into_wall PASSED                                     [ 88%]
+Game/test_game.py::TestGridGame::test_successful_jump PASSED                                                  [100%]
+
+================================================ 9 passed in 0.10s =================================================
+"""
