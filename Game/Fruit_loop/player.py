@@ -6,7 +6,7 @@ class Player:
     def __init__(self, x, y):
         self.pos_x = x
         self.pos_y = y
-        self.score = 100
+        self.score = 30
         self.inventory = []
 
     def can_move(self, dx, dy, grid):

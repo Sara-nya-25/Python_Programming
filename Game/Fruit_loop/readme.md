@@ -12,13 +12,15 @@ Ensure your directory structure looks like this:
 
 ```text
 Game/
-├── main.py           # The game launcher
-└── Fruit_loop/       # The source package
-    ├── __init__.py
-    ├── game.py       # Main game loop
-    ├── grid.py       # Map and wall logic
-    ├── player.py     # Movement logic
-    └── pickups.py    # Item and trap logic
+│
+├── main.py                   # The main game loop (entry point)
+├── test_game.py              # Unit tests for TDD (Version 3)
+├── Fruit_loop/               # Package directory
+│   ├── __init__.py           # Package initializer
+│   ├── grid.py               # Grid generation & Room loops
+│   ├── player.py             # Movement & Collision logic
+│   └── pickups.py            # Items, Chests, and Keys
+└── README.md                 # Project documentation
 ```
 ## Running the Game
 You can run the game from the root directory (Game/) using either of these methods:
