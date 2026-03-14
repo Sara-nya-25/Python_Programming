@@ -17,7 +17,7 @@ Game/
 ├── test_game.py              # Unit tests for TDD (Version 3)
 ├── Fruit_loop/               # Package directory
 │   ├── __init__.py   
-    ├── game.py               # Game logic & simulation
+│   ├── game.py               # Game logic & simulation
 │   ├── grid.py               # Grid generation & Room loops
 │   ├── player.py             # Movement & Collision logic
 │   └── pickups.py            # Items, Chests, and Keys
